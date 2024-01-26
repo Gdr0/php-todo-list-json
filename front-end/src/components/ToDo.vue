@@ -5,7 +5,27 @@ export default {
   data() {
     return {
       tasks: [],
+      NewTask: "",
     };
+  },
+  methods: {
+    PushTask() {
+      const params = {
+        params: {
+          task: this.NewTask,
+        },
+      };
+      axios
+        .get(
+          "http://localhost/BOOLEAN/ESERCIZI/php-todo-list-json/back-end/pushTask.php",
+
+          params
+        )
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => console.log(err));
+    },
   },
   mounted() {
     axios
@@ -21,6 +41,11 @@ export default {
 </script>
 
 <template>
+  <h1>TASKS: {{ tasks.length }}</h1>
+  <form @submit.prevent="PushTask">
+    <input type="text" name="task" v-model="NewTask" />
+    <input type="submit" value="SEND" />
+  </form>
   <div v-for="(task, index) in tasks" :key="index">
     <h3>{{ task.task }}</h3>
     <ul>
