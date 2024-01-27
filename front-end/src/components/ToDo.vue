@@ -10,9 +10,10 @@ export default {
   },
   methods: {
     PushTask() {
+      const t = this;
       const params = {
         params: {
-          task: this.NewTask,
+          task: t.NewTask,
         },
       };
       axios
@@ -23,6 +24,25 @@ export default {
         )
         .then((res) => {
           console.log(res.data);
+          t.tasks = res.data;
+          t.NewTask = "";
+        })
+        .catch((err) => console.log(err));
+    },
+    deleteTask(index) {
+      const t = this;
+      const params = {
+        params: {
+          index: index,
+        },
+      };
+      axios
+        .get(
+          "http://localhost/BOOLEAN/ESERCIZI/php-todo-list-json/back-end/DeleteTask.php",
+          params
+        )
+        .then((res) => {
+          t.tasks = res.data;
         })
         .catch((err) => console.log(err));
     },
@@ -56,6 +76,7 @@ export default {
         {{ task.data_scadenza }}
       </li>
     </ul>
+    <button @click="deleteTask(index)">DELETE</button>
   </div>
 </template>
 
