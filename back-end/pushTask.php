@@ -6,12 +6,15 @@ header("Content-Type: application/json");
 
 $jsonTasks= file_get_contents("list.json");
 $Tasks = json_decode($jsonTasks, true);
-
+$priorita = $_GET['priorita']; 
 $task = $_GET['task'];
+$date = $_GET['data_scadenza'];
+
     $newTask = [
         "task" => $task,
-        'priorita' => 'bassa',
-        'data_scadenza'=>'2024-03-15'
+        'priorita' => $priorita,
+        'data_scadenza'=>$date,
+        'completed' => false
     ];
     $Tasks[]= $newTask;
     $jsonTasks = json_encode($Tasks);
@@ -49,7 +52,7 @@ $task = $_GET['task'];
     // $newTask = [
     //     "task" => $task,
     //     'priorità' => 'bassa',
-    //     'data_scadenza'=>'2024-03-15'
+    //     'data_scadenza'=>$date,
     // ];
   
 
